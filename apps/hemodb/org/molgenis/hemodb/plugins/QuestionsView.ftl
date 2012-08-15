@@ -47,7 +47,7 @@
 	
 				<div id="geneList">
 					<br />Supply the gene(s) you want to select (comma seperated):<br />
-					<p style="font-size=8px">Please be aware that if you supply a large list of genes it will take a while to calculate</p>
+					Please be aware that if you supply a large list of genes it will take a while to calculate
 					<textarea rows="10" cols="51" name="geneText"value="genes"></textarea>
 				</div>
 		
