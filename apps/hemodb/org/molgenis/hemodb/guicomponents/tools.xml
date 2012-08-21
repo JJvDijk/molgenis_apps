@@ -4,8 +4,6 @@
 			type="org.molgenis.hemodb.plugins.QuestionsOverview" />
 		<plugin label="Search database" name="SimpleDbSearch"
 			type="plugin.search.SimpleWholeDatabaseSearch" group="biologist" />
-		<plugin label="Format names" name="NamingPolicy"
-			type="plugins.help.naming.NamingPlugin" group="biologist" />
 		<plugin label="Rename duplicates" name="DuplicateRenaming"
 			type="plugins.help.duplicates.DuplicatesPlugin" group="biologist" />
 		<plugin label="KEGG converter" name="KeggConverter"

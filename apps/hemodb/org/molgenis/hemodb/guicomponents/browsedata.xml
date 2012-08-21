@@ -19,7 +19,7 @@
 			</form>
 			<menu name="BasicAnnotations" label="Annotations" header="Navigate annotations"> <!-- header does not work yet for menu -->
 				<form name="Samples" entity="HemoSample" hide_fields="ontologyReference,AlternateId,label" group="biologist" />
-				<form name="Measurements" entity="Measurement"
+				<form name="Measurement" label="Parameters" entity="Measurement"
 					hide_fields="targettypeAllowedForRelation,panelLabelAllowedForRelation,ontologyReference,AlternateId,label,unit,categories,temporal,dataType,Investigation"
 					group="biologist" />
 				<form name="Probes" entity="HemoProbe" hide_fields="ontologyReference,AlternateId,label,Symbol" group="biologist" />

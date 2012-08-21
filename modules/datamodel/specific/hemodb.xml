@@ -41,13 +41,10 @@
 		</entity>
 		<entity name="HemoGene" extends="ObservableFeature">
 			<description> Trait annotations specific for genes.</description>
-			<field name="Symbol" nillable="true"
+			<field name="GeneSymbol" nillable="true"
 				description="Main symbol this gene is known by (not necessarily unique, in constrast to 'name')" />
 			<field name="Control" type="bool" nillable="true"
 				description="Indicating whether this is a 'housekeeping' gene that can be used as control." />
-			<field name="Orientation" type="enum" enum_options="[?,F,R]"
-				nillable="true"
-				description="Orientation of the gene on the genome (F=forward, R=reverse)" />
 		</entity>
 		<entity name="HemoProbe" extends="ObservableFeature"
 			implements="Locus">
@@ -57,7 +54,7 @@
 			<field name="ProbeSet" type="xref" nillable="true" xref_entity="ProbeSet"
 				xref_field="id" xref_label="name"
 				description="Optional: probeset this probe belongs to (e.g., in Affymetrix assays)." />
-			<field name="ReportsFor" label="ReportsFor" type="xref"
+			<field name="GeneSymbol" label="GeneSymbol" type="xref"
 				xref_entity="HemoGene" xref_field="id" xref_label="name" nillable="true"
 				description="The gene this probe reports for." />
 			<field name="EntrezID" type="string" nillable="true"
@@ -65,7 +62,7 @@
 			<field name="RefseqID" type="string" nillable="true"
 				description="The refseq ID for the probe" />
 		</entity>
-		<entity name="HemoSampleGroup" implements="Identifiable">
+		<entity name="HemoSampleGroup" implements="Identifiable" xref_label="name">
 			<description>Sample classification (ALL CD34+, AML CD34-, AML CD34+, AML MNC, BC CML, BM CD34+, BM post ASCT, BM retroviral model, CB CD34+, CB retroviral model, mob PBSC, NA, NSG, stroma)
 			</description>
 			<field name="name" type="string" nillable="true" unique="true" />

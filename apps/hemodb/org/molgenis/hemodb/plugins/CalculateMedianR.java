@@ -212,9 +212,9 @@ public class CalculateMedianR implements Runnable
 			List<String> genes = new ArrayList<String>();
 			for (HemoProbe gfp : genesForProbe)
 			{
-				if (!genes.contains(gfp.getReportsFor_Name()))
+				if (!genes.contains(gfp.getGeneSymbol_Name()))
 				{
-					genes.add(gfp.getReportsFor_Name());
+					genes.add(gfp.getGeneSymbol_Name());
 				}
 			}
 

@@ -105,6 +105,7 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 			if ("back".equals(request.getAction()))
 			{
 				getModel().setState(QuestionState.BEGINNING);
+				getModel().results.clear();
 			}
 
 			// Which question to show?
@@ -198,11 +199,6 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 		}
 		else
 		{
-			// for (String hsg : sampleGroups)
-			// {
-			// List<HemoSample> samplesPerGroup = db.find(HemoSample.class, new
-			// QueryRule(HemoSample.SAMPLEGROUP_NAME,
-			// Operator.EQUALS, hsg));
 			List<HemoSample> samplesPerGroup = db.find(HemoSample.class, new QueryRule(HemoSample.SAMPLEGROUP_NAME,
 					Operator.IN, sampleGroups));
 			for (HemoSample name : samplesPerGroup)
@@ -236,18 +232,15 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 				genesUpper.add(gene.trim());
 			}
 			System.out.println("genesUpper: " + genesUpper);
-			List<HemoProbe> probesPerGene = db.find(HemoProbe.class, new QueryRule(HemoProbe.REPORTSFOR_NAME,
+			List<HemoProbe> probesPerGene = db.find(HemoProbe.class, new QueryRule(HemoProbe.GENESYMBOL_NAME,
 					Operator.IN, genesUpper));
 			for (HemoProbe probe : probesPerGene)
 			{
-				// System.out.println("name of probe: " + probe.getName());
 				probes.add(probe.getName());
 				getModel().getResults().add(probe.getName());
 			}
 			if (!probes.isEmpty())
 			{
-				// System.out.println("probes found with this gene(s): " +
-				// probes);
 				return probes;
 			}
 			else if (probes.isEmpty())
@@ -289,15 +282,14 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 			List<String> genes = new ArrayList<String>();
 			for (HemoProbe gfp : genesForProbe)
 			{
-				if (!genes.contains(gfp.getReportsFor_Name()))
+				if (!genes.contains(gfp.getGeneSymbol_Name()))
 				{
-					genes.add(gfp.getReportsFor_Name());
-					getModel().getResults().add(gfp.getReportsFor_Name());
+					genes.add(gfp.getGeneSymbol_Name());
+					getModel().getResults().add(gfp.getGeneSymbol_Name());
 				}
 			}
 			if (!genes.isEmpty())
 			{
-				// System.out.println("gene found with this probe: " + genes);
 				return genes;
 			}
 			else if (genes.isEmpty())
@@ -394,10 +386,8 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 			 * Gets the selected groups from the website (request) and retrieves
 			 * the associated samples
 			 */
-			List<String> groups = request.getStringList("sampleGroups");
+			List<String> groups = request.getStringList("checkboxGroups");
 			List<String> sampleNames = selectSamplesFromSampleGroups(db, groups);
-			System.out.println("Groups are: " + groups);
-			System.out.println("Samples selected are: " + sampleNames);
 
 			/**
 			 * Submit button
@@ -484,11 +474,6 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 		 * differentially expressed genes between two groups that are specified
 		 * on the website. This calculation will be performed by R scripts
 		 */
-		if ("back".equals(request.getAction()))
-		{
-			getModel().setState(QuestionState.BEGINNING);
-			getModel().setResults(null);
-		}
 
 		/**
 		 * Gene expression data matrix selection (raw/normalized data)
@@ -504,7 +489,7 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 		/**
 		 * Select the samples based on the sample group names
 		 */
-		List<String> groups = request.getStringList("sampleGroups");
+		List<String> groups = request.getStringList("checkboxGroups");
 		int numberGroups = groups.size();
 		List<String> sampleNamesGroup1 = new ArrayList<String>();
 		List<String> sampleNamesGroup2 = new ArrayList<String>();
@@ -533,12 +518,6 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 		 * Get all the (hemo)probe names present in the database
 		 */
 		List<String> allProbes = selectAllProbeNames(db);
-		System.out.println("Gene expression dataset is: " + geneExp);
-		System.out.println("Method of combination is: " + sampleCombine);
-		System.out.println("Groups are: " + groups);
-		System.out.println("Samples in group One are: " + sampleNamesGroup1);
-		System.out.println("Samples in group Two are: " + sampleNamesGroup2);
-		System.out.println("Significancy cutoff is: " + signifCutoff);
 
 		/**
 		 * Submit button
@@ -570,13 +549,11 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 
 		if (sampleCombine.equals("sampleCombineMean"))
 		{
-			// roep mean script aan met alle data
 			new CalculateMeanR(getModel(), geneExp, sampleNamesGroup1, sampleNamesGroup2, groups, signifCutoff,
 					allProbes, this.getEmailService(), email);
 		}
 		else
 		{
-			// roep median script aan met alle data
 			new CalculateMedianR(getModel(), geneExp, sampleNamesGroup1, sampleNamesGroup2, groups, signifCutoff,
 					allProbes, this.getEmailService(), email);
 		}
@@ -595,11 +572,6 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 		 * This is done by querying the database. The results are handled by the
 		 * QuestionsView.ftl.
 		 */
-		if ("back".equals(request.getAction()))
-		{
-			getModel().setState(QuestionState.BEGINNING);
-			getModel().setResults(null);
-		}
 
 		/**
 		 * Submit button
@@ -616,13 +588,12 @@ public class QuestionsOverview extends EasyPluginController<QuestionsModel>
 
 		if (converting.equals("convertGenes"))
 		{
-			List<String> probes = selectProbesWithGenes(db, stringsToConvert);
-			System.out.println("selected probes are: " + probes);
+			selectProbesWithGenes(db, stringsToConvert);
+
 		}
 		else if (converting.equals("convertProbes"))
 		{
-			List<String> genes = selectGenesWithProbes(db, stringsToConvert);
-			System.out.println("selected genes are: " + genes);
+			selectGenesWithProbes(db, stringsToConvert);
 		}
 	}
 

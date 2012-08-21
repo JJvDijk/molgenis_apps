@@ -48,17 +48,16 @@
 				<div id="geneList">
 					<br />Supply the gene(s) you want to select (comma seperated):<br />
 					Please be aware that if you supply a large list of genes it will take a while to calculate
-					<textarea rows="10" cols="51" name="geneText"value="genes"></textarea>
+					<textarea rows="10" cols="51" name="geneText"value="genes">flt3,meis1,znf521, prdm8</textarea>
 				</div>
 		
 				<div id="groupSelection">
-					<br/>Make a selection of the groups you are interested in. Hold down the Ctrl (windows) / Command (Mac) button to select multiple groups.<br />
-					<select multiple="multiple" name="sampleGroups" id="sGroups" style="margin-right:10px">
-											<option value="none" selected="selected">no selection made</option>
-					<#list model.names as samplenames>
-						<option value="${samplenames}">${samplenames}</option>
-					</#list>
-					</select>
+					Make a selection of the groups you are interested in. <br />
+					<form>
+						<#list model.names as samplenames>
+							<input type="checkbox" name="checkboxGroups" value="${samplenames}" />${samplenames}<br />
+						</#list>
+					</form>
 				</div>
 		
 				<div id="submit">
@@ -94,18 +93,17 @@
 	</div>
 
 	<div id="groupSelection">
-		<br/>Make a selection of the groups you are interested in. Hold down the Ctrl (windows) / Command (Mac) button to select multiple groups.<br />
-		<select multiple="multiple" name="sampleGroups" id="sGroups" style="margin-right:10px">
-			<option value="none" selected="selected">no selection made</option>
+		<br/>Select the 2 groups you are interested in: <br />
+			<form>
 			<#list model.names as samplenames>
-				<option value="${samplenames}">${samplenames}</option>
+				<input type="checkbox" name="checkboxGroups" value="${samplenames}" />${samplenames}<br />
 			</#list>
-		</select>
+			</form>
 	</div>
 	
 	<div>
 	<br/>What is the significance cutoff you want to use? (Gene Y must be minimal x times higher or lower expressed than gene Z to be signifficant (Non log2 values))<br/>
-	<textarea rows="2" cols="5" name="signifCutoff" value="cutoff"></textarea>
+	<textarea rows="2" cols="5" name="signifCutoff" value="cutoff">2.0</textarea>
 	</div>
 
 	<div id="submit">

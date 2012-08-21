@@ -154,6 +154,7 @@ public class CalculateMeanR implements Runnable
 			String line = scanner.nextLine();
 			probes.add(line);
 		}
+		System.out.println("probes are: " + probes);
 		List<String> genes = selectGenesWithProbes(db, probes);
 		System.out.println("genes are: " + genes);
 
@@ -213,9 +214,9 @@ public class CalculateMeanR implements Runnable
 			List<String> genes = new ArrayList<String>();
 			for (HemoProbe gfp : genesForProbe)
 			{
-				if (!genes.contains(gfp.getReportsFor_Name()))
+				if (!genes.contains(gfp.getGeneSymbol_Name()))
 				{
-					genes.add(gfp.getReportsFor_Name());
+					genes.add(gfp.getGeneSymbol_Name());
 				}
 			}
 
