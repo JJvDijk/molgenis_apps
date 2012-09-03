@@ -1,9 +1,3 @@
-<#--Date:        November 11, 2009
- * Template:	PluginScreenFTLTemplateGen.ftl.ftl
- * generator:   org.molgenis.generators.ui.PluginScreenFTLTemplateGen 3.3.2-testing
- * 
- * THIS FILE IS A TEMPLATE. PLEASE EDIT :-)
--->
 <#macro org_molgenis_hemodb_header_MolgenisHeader screen>
 
 <div style="height:10px;">&nbsp;</div>
