@@ -46,13 +46,13 @@
 				</div>
 	
 				<div id="geneList">
-					<br />Supply the gene(s) you want to select (comma seperated):<br />
-					Please be aware that if you supply a large list of genes it will take a while to calculate
-					<textarea rows="10" cols="51" name="geneText"value="genes">flt3,meis1,znf521, prdm8</textarea>
+					<br />Supply the gene symbol(s) you want to select (comma seperated):<br />
+					Please be aware that if you supply a large list of genes it will take a while to calculate<br />
+					<textarea rows="10" cols="51" name="geneText"value="genes">flt3,meis1,znf521, prdm8</textarea><br />
 				</div>
 		
 				<div id="groupSelection">
-					Make a selection of the groups you are interested in. <br />
+					<br />Make a selection of the groups you are interested in. <br />
 					<form>
 						<#list model.names as samplenames>
 							<input type="checkbox" name="checkboxGroups" value="${samplenames}" />${samplenames}<br />
@@ -112,7 +112,7 @@
 
 	<#elseif model.state== "QUESTION2_RESULT">
 	<p>
-		The resulting list of genes will be send to you by email within a few minutes. Please check your spam folder if you don't get an email.
+		The resulting list of genes will be send to you by email within a few minutes. Please check your spam folder and if you have supplied an email address if you don't get an email.
 	</p>
 
 
@@ -120,8 +120,8 @@
 	You can convert between probes and genes here.
 	<div id="convertGenesProbes">
 		Choose the input:<br/>
-		<input type="radio" id="convertGenesToProbes" name="convertGP" value="convertGenes" /> Genes<br />
-		<input type="radio" id="convertProbesToGenes" name="convertGP" value="convertProbes" /> Probes<br />
+		<input type="radio" id="convertGenesToProbes" name="convertGP" value="convertGenes" /> Genes (gene symbols)<br />
+		<input type="radio" id="convertProbesToGenes" name="convertGP" value="convertProbes" /> Probes (illumina probe IDs with prefix p_)<br />
 	</div>
 	
 	<div id="geneList">
